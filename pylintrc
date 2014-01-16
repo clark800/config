@@ -69,7 +69,7 @@ comment=no
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
-disable=I,R,missing-docstring,relative-import,star-args,fixme,no-init,dangerous-default-value,invalid-name
+disable=I,R,missing-docstring,relative-import,star-args,fixme,no-init,dangerous-default-value,invalid-name,super-on-old-class
 
 
 
@@ -102,7 +102,7 @@ generated-members=REQUEST,acl_users,aq_parent
 [FORMAT]
 
 # Maximum number of characters on a single line.
-max-line-length=80
+max-line-length=79
 
 # Regexp for a line that is allowed to be longer than the limit.
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$
