@@ -1,0 +1,73 @@
+#!/bin/bash
+
+DEFAULT='*.py pylint
+*.py pep8'
+
+if [[ "$#" == 1 && "$1" == "install" ]]; then
+    templatedir="$(git config --global init.templatedir)"
+    if [[ "$templatedir" == "" ]]; then
+        templatedir="~/.git_template"
+        git config --global init.templatedir '~/.git_template'
+    fi
+    mkdir -p "$templatedir/hooks"
+    script_path=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+    cp -i "$script_path" "$templatedir/hooks/pre-commit"
+    if [[ ! -e "~/.git-pre-commit" ]]; then
+        echo "$DEFAULT" >> "~/.git-pre-commit"
+    fi
+    echo "Installation complete, you may now delete this file."
+    echo "The pre-commit will automatically be used in new repos"
+    echo "and repos that you clone. Run 'git init' in any existing"
+    echo "repos to activate the pre-commit for them."
+    exit 0
+fi
+
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+# ROOT is the absolute path of the top-level of the git repository
+root=$(git rev-parse --show-toplevel)
+
+confpaths=("$root/.git-pre-commit" "~/.git-pre-commit" "/etc/git-pre-commit")
+
+for confpath in $confpaths; do
+    if [[ -e "$confpath" ]]; then
+        conf="$confpath"
+    fi
+done
+
+if [[ -z "$conf" ]]; then
+    echo "Could not find git-pre-commit configuration file"
+    echo "Allowed paths are: $confpaths"
+fi
+
+# git diff will gives a list of all the files that have changed in this commit
+# --cached runs a diff between files to be committed and your last commit
+# --name-only displays names of files only, instead of the complete diff
+# --diff-filter options: A=Added, M=Modified
+
+for file in $(git diff --cached --name-only --diff-filter=AM $against); do
+    while read rule; do
+        pattern=$(echo $rule | cut -d' ' -f1)
+        if [[ "$file" == $pattern ]]; then
+            cmd=$(echo $rule | cut -d' ' -f2-)
+            if [[ "$cmd" == "" ]]; then
+                echo "Syntax error in $conf"
+                exit 1
+            fi
+            if ! $cmd "$file"; then
+                echo "pre-commit failed, commit aborted!"
+                exit 1
+            fi
+        fi
+    done < "$conf"
+done
+
+# check for trailing whitespace
+exec git diff-index --check --cached $against --
