@@ -4,8 +4,8 @@
   "freeze": true,
   "latedef": "nofunc",
   "nonew": true,
-  "quotemark": "single",
+  "quotmark": "single",
   "undef": true,
   "unused": "vars",
-  "predef": ["console", "require"]
+  "predef": ["console", "require", "module"]
 }
