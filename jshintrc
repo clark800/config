@@ -1,0 +1,11 @@
+{
+  "eqeqeq": true,
+  "forin": true,
+  "freeze": true,
+  "latedef": "nofunc",
+  "nonew": true,
+  "quotemark": "single",
+  "undef": true,
+  "unused": "vars",
+  "predef": ["console", "require"]
+}
