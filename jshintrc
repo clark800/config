@@ -3,7 +3,7 @@
   "browser": true,
   "jquery": true,
   "node": true,
-  
+
   // enforcing options
   "curly": true,    // require curly braces around blocks
   "eqeqeq": true,   // prohibit use of == and != operators
