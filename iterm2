@@ -114,7 +114,7 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>517 232 924 485 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>473 229 650 501 0 0 1920 1057 </string>
+	<string>0 0 1920 1058 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -857,14 +857,16 @@
 			<string>/Local/Users/clark</string>
 		</dict>
 	</array>
+	<key>NoSyncNeverRemindPrefsChangesCopy</key>
+	<true/>
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>453418016.30049002</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>453418016.30079198</real>
+	<real>455158678.58657002</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
-	<false/>
+	<true/>
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
@@ -923,7 +925,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-05-18T17:18:32Z</date>
+	<date>2015-06-05T00:57:43Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -944,6 +946,10 @@
 	<false/>
 	<key>TmuxDashboardLimit</key>
 	<integer>10</integer>
+	<key>ToolbeltTools</key>
+	<array>
+		<string>Profiles</string>
+	</array>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
 	<key>URLHandlersByGuid</key>
@@ -3230,7 +3236,7 @@
 										<key>Rows</key>
 										<integer>56</integer>
 										<key>Working Directory</key>
-										<string>/Local/Users/clark/</string>
+										<string>/Local/Users/clark</string>
 									</dict>
 									<key>View Type</key>
 									<string>SessionView</string>
@@ -3284,6 +3290,10 @@
 	<integer>3</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
 	<string>2.1.1</string>
 </dict>
