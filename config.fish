@@ -7,6 +7,8 @@ function fish_prompt --description 'Write out the prompt'
     echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) '> '
 end
 
+alias prlint="eslint --quiet --reset -c ~/.eslintrc (git --no-pager diff --name-only -M100% --diff-filter=AM --relative FETCH_HEAD | grep '\.js\$')"
+
 function vm
     switch (count $argv)
         case 0
