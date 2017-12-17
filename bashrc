@@ -13,3 +13,12 @@ function vm {
 function title {
     echo -n -e "\033]0;$1\007"
 }
+
+function notify {
+  message="${1:-Process complete}"
+  options='title "Terminal" sound name "Ping"'
+  script="display notification \"$message\" with $options"
+  /usr/bin/osascript -e "$script"
+}
+
+alias python=python3
