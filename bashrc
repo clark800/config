@@ -1,3 +1,8 @@
+
+alias python=python3
+
+stty -ixon      # disable Ctrl-S and Ctrl-Q
+
 function vm {
     local name=${1:-dev}
     local username=${2:-admin}
@@ -20,5 +25,3 @@ function notify {
   script="display notification \"$message\" with $options"
   /usr/bin/osascript -e "$script"
 }
-
-alias python=python3

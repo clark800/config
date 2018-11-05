@@ -1,13 +1,18 @@
 set fish_greeting ""
+set PATH . $PATH
+
+alias vi=vim
 alias python=python3
-alias py=python3
 alias gdb="gdb -quiet"
+alias ls="ls --color=auto"
+
+stty -ixon      # disable Ctrl-S and Ctrl-Q
+
+alias prlint="eslint --quiet --reset -c ~/.eslintrc (git --no-pager diff --name-only -M100% --diff-filter=AM --relative FETCH_HEAD | grep '\.js\$')"
 
 function fish_prompt --description 'Write out the prompt'
     echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) '> '
 end
-
-alias prlint="eslint --quiet --reset -c ~/.eslintrc (git --no-pager diff --name-only -M100% --diff-filter=AM --relative FETCH_HEAD | grep '\.js\$')"
 
 function vm
     switch (count $argv)
@@ -28,4 +33,9 @@ function vm
     set port (VBoxManage showvminfo "$name" --machinereadable | \
                  grep '^Forwarding(.*,22"' | cut -d, -f4)
     ssh -p $port -o ConnectionAttempts=60 $username@localhost
+end
+
+# map Ctrl-D to "clear"
+function fish_user_key_bindings
+    bind \cd echo\ -n\ \(clear\ \|\ string\ replace\ \\e\\\[3J\ \"\"\)\;\ commandline\ -f\ repaint
 end
