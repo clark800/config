@@ -13,8 +13,7 @@ set viminfo='20,<1000       " remember marks for previous 20 files;
 syntax on                   " enable syntax highlighting
 filetype plugin indent on   " enable filetype plugins and indentation rules
 
-" fold indented blocks in todo files
-function! TodoFoldExpr(line_number)
+function IndentedBlockFoldExpr(line_number)
     let current_indent = indent(a:line_number) / &shiftwidth
     let next_indent = indent(a:line_number + 1) / &shiftwidth
 
@@ -27,15 +26,28 @@ function! TodoFoldExpr(line_number)
     endif
 endfunction
 
-function! TodoFoldText(fold_start)
+function IndentedBlockFoldText(fold_start)
     return getline(a:fold_start) . " …"
 endfunction
 
-autocmd BufEnter,BufNew *.todo setlocal foldmethod=expr
-autocmd BufEnter,BufNew *.todo setlocal foldexpr=TodoFoldExpr(v:lnum)
-autocmd BufEnter,BufNew *.todo setlocal foldtext=TodoFoldText(v:foldstart)
-autocmd BufEnter,BufNew *.todo setlocal fillchars=fold:\    " escaped space
-autocmd BufEnter,BufNew *.todo highlight Folded ctermfg=NONE ctermbg=NONE
+function ToggleFold()
+  if foldclosed(line('.')) >= 0
+    silent! normal zv
+  else
+    silent! normal za
+  endif
+endfunction
+
+function SetIndentedBlockFolding()
+    setlocal foldmethod=expr
+    setlocal foldexpr=IndentedBlockFoldExpr(v:lnum)
+    setlocal foldtext=IndentedBlockFoldText(v:foldstart)
+    setlocal fillchars=fold:\    " escaped space
+    highlight Folded ctermfg=NONE ctermbg=NONE
+    nnoremap <buffer> <silent> <tab> :<c-u>call ToggleFold()<cr>
+endfunction
+
+autocmd BufRead,BufNewFile *.todo call SetIndentedBlockFolding()
 
 " highlight column 81
 highlight ColorColumn ctermbg=236 guibg=#303030
