@@ -5,6 +5,12 @@ set shiftwidth=4            " use 4 spaces for each step of (auto)indent
 set expandtab               " expand <Tab> keypresses to spaces
 set scrolloff=10            " show 10 lines of context around cursor
 set colorcolumn=81          " color column 81
+set wildmenu
+set path+=**
+set completeopt=menu
+
+" set color of autocomplete popup menu
+highlight Pmenu ctermbg=238
 
 " http://vimdoc.sourceforge.net/htmldoc/options.html#'viminfo'
 set viminfo='20,<1000       " remember marks for previous 20 files;
@@ -31,11 +37,11 @@ function IndentedBlockFoldText(fold_start)
 endfunction
 
 function ToggleFold()
-  if foldclosed(line('.')) >= 0
-    silent! normal zv
-  else
-    silent! normal za
-  endif
+    if foldclosed(line('.')) >= 0
+        silent! normal zv
+    else
+        silent! normal za
+    endif
 endfunction
 
 function SetIndentedBlockFolding()
@@ -48,6 +54,21 @@ function SetIndentedBlockFolding()
 endfunction
 
 autocmd BufRead,BufNewFile *.todo call SetIndentedBlockFolding()
+
+" http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
+function! CleverTab()
+    if pumvisible()
+        return "\<C-N>"
+    endif
+        if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        return "\<Tab>"
+    elseif exists('&omnifunc') && &omnifunc != ''
+        return "\<C-X>\<C-O>"
+    else
+        return "\<C-N>"
+    endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
 
 " highlight column 81
 highlight ColorColumn ctermbg=236 guibg=#303030
@@ -63,6 +84,9 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" update tags file after writes
+autocmd BufWritePost *.c,*.h,*.zero silent! !ctags -R --quiet &
 
 " map Ctrl-Arrow keys
 map <ESC>[1;5A <C-Up>
