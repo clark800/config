@@ -5,6 +5,7 @@ alias vi=vim
 alias python=python3
 alias gdb="gdb -quiet"
 alias ls="ls --color=auto"
+alias grep="grep --color --exclude=tags"
 
 stty -ixon      # disable Ctrl-S and Ctrl-Q
 
@@ -12,6 +13,27 @@ alias prlint="eslint --quiet --reset -c ~/.eslintrc (git --no-pager diff --name-
 
 function fish_prompt --description 'Write out the prompt'
     echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) '> '
+end
+
+function todo
+    vim (git config --get todo.path)
+end
+
+function gd
+    git diff
+end
+
+function gdo
+    git diff origin/master
+end
+
+function gst
+    git status
+end
+
+function gco
+    git add -A
+    and git commit -m "$argv[1]"
 end
 
 function vm
