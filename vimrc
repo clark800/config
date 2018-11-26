@@ -22,9 +22,14 @@ filetype plugin indent on   " enable filetype plugins and indentation rules
 function IndentedBlockFoldExpr(line_number)
     let current_indent = indent(a:line_number) / &shiftwidth
     let next_indent = indent(a:line_number + 1) / &shiftwidth
-
+    if getline(a:line_number) =~ '\v^\s*$'
+        return -1
+    endif
+    if getline(a:line_number + 1) =~ '\v^\s*$'
+        return current_indent
+    endif
     if next_indent > current_indent
-        return next_indent
+        return ">" . next_indent
     elseif next_indent < current_indent
         return "<" . current_indent
     else
@@ -60,7 +65,7 @@ function! CleverTab()
     if pumvisible()
         return "\<C-N>"
     endif
-        if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
         return "\<Tab>"
     elseif exists('&omnifunc') && &omnifunc != ''
         return "\<C-X>\<C-O>"
