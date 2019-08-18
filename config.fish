@@ -9,14 +9,21 @@ alias grep="grep --color --exclude=tags"
 
 stty -ixon      # disable Ctrl-S and Ctrl-Q
 
-alias prlint="eslint --quiet --reset -c ~/.eslintrc (git --no-pager diff --name-only -M100% --diff-filter=AM --relative FETCH_HEAD | grep '\.js\$')"
-
 function fish_prompt --description 'Write out the prompt'
     echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) '> '
 end
 
 function tmux-dev
-    tmux new-session \; split-window -b -h -l 80
+    set cols (tput cols)
+    if [ "$cols" -lt 160 ]
+        tmux new-session \; split-window -b -h -l 80
+    else if [ "$cols" -lt 240 ]
+        tmux new-session \; split-window -b -h -l (math "$cols/2")
+    else
+        tmux new-session \; \
+            split-window -b -h -l (math "2*$cols/3") \; \
+            split-window -b -h -l (math "$cols/3")
+    end
 end
 
 function todo
