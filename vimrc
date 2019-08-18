@@ -91,10 +91,10 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " update tags file after writes
-autocmd BufWritePost *.c,*.h,*.zero silent! !ctags -R --quiet &
+" autocmd BufWritePost *.c,*.h,*.zero silent! !ctags -R --quiet &
 
 " map Ctrl-Arrow keys
-map <ESC>[1;5A <C-Up>
-map <ESC>[1;5B <C-Down>
-map <ESC>[1;5C <C-Right>
-map <ESC>[1;5D <C-Left>
+" map <ESC>[1;5A <C-Up>
+" map <ESC>[1;5B <C-Down>
+" map <ESC>[1;5C <C-Right>
+" map <ESC>[1;5D <C-Left>
