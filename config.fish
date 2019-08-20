@@ -1,13 +1,22 @@
 set fish_greeting ""
 set PATH . $PATH
-
-alias vi=vim
-alias python=python3
-alias gdb="gdb -quiet"
-alias ls="ls --color=auto"
-alias grep="grep --color --exclude=tags"
-
 stty -ixon      # disable Ctrl-S and Ctrl-Q
+
+alias vi="vim"
+alias python="python3"
+alias gdb="gdb -quiet"
+alias grep="grep --color --exclude=tags"
+alias todo="vim (git config --get todo.path)"
+alias gd="git diff"
+alias gdo="git diff origin/master"
+alias gst="git status"
+
+if [ (uname -s) = "Linux" ]
+    alias ls="ls --color=auto"
+end
+if [ (uname -s) = "Darwin" ]
+    alias ls="ls -G"
+end
 
 function fish_prompt --description 'Write out the prompt'
     echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) '> '
@@ -24,27 +33,6 @@ function tmux-dev
             split-window -b -h -l (math "2*$cols/3") \; \
             split-window -b -h -l (math "$cols/3")
     end
-end
-
-function todo
-    vim (git config --get todo.path)
-end
-
-function gd
-    git diff
-end
-
-function gdo
-    git diff origin/master
-end
-
-function gst
-    git status
-end
-
-function gco
-    git add -A
-    and git commit -m "$argv[1]"
 end
 
 function vm
