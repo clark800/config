@@ -5,6 +5,7 @@ set shiftwidth=4            " use 4 spaces for each step of (auto)indent
 set expandtab               " expand <Tab> keypresses to spaces
 set scrolloff=10            " show 10 lines of context around cursor
 set colorcolumn=81          " color column 81
+set laststatus=1            " only show statusline when there are >1 windows
 set wildmenu
 set path+=**
 set completeopt=menu
