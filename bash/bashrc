@@ -2,6 +2,7 @@ alias python=python3
 alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
 export MYVIMRC="$HOME/.config/vim/vimrc"
 export VIMINIT="source $MYVIMRC"
+export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 
 stty -ixon      # disable Ctrl-S and Ctrl-Q
 

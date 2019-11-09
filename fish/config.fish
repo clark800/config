@@ -2,6 +2,7 @@ set fish_greeting ""
 set PATH . $PATH
 set -x MYVIMRC "$HOME/.config/vim/vimrc"
 set -x VIMINIT "source $MYVIMRC"
+set -x NPM_CONFIG_USERCONFIG "$HOME/.config/npm/npmrc"
 stty -ixon      # disable Ctrl-S and Ctrl-Q
 
 alias vi="vim"
