@@ -1,0 +1,2 @@
+[[ -s ~/.config/bash/bashrc ]] && source ~/.config/bash/bashrc
+export PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
