@@ -1,5 +1,8 @@
 alias python=python3
 alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
+
+export SHELL_SESSION_HISTORY=0
+export HISTFILE="$HOME/.local/share/bash/history"
 export MYVIMRC="$HOME/.config/vim/vimrc"
 export VIMINIT="source $MYVIMRC"
 export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
