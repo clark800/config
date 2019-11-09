@@ -1,7 +1,12 @@
-
 alias python=python3
+export MYVIMRC="$HOME/.config/vim/vimrc"
+export VIMINIT="source $MYVIMRC"
 
 stty -ixon      # disable Ctrl-S and Ctrl-Q
+
+function dock {
+    docker run --hostname docker -it -v ~/docker:/home/$(whoami) "$1"
+}
 
 function vm {
     local name=${1:-dev}
@@ -13,6 +18,11 @@ function vm {
     local port=$(VBoxManage showvminfo "$name" --machinereadable |
                  grep '^Forwarding(.*,22"' | cut -d, -f4)
     ssh -p $port -o ConnectionAttempts=60 $username@localhost
+}
+
+function pause {
+    local name=${1:-vm}
+    VBoxManage controlvm "$name" pause
 }
 
 function title {

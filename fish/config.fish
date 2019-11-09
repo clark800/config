@@ -1,5 +1,7 @@
 set fish_greeting ""
 set PATH . $PATH
+set -x MYVIMRC "$HOME/.config/vim/vimrc"
+set -x VIMINIT "source $MYVIMRC"
 stty -ixon      # disable Ctrl-S and Ctrl-Q
 
 alias vi="vim"
