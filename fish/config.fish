@@ -12,6 +12,7 @@ alias todo="vim (git config --get todo.path)"
 alias gd="git diff"
 alias gdo="git diff origin/master"
 alias gst="git status"
+alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
 
 if [ (uname -s) = "Linux" ]
     alias ls="ls --color=auto"

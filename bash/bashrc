@@ -1,4 +1,5 @@
 alias python=python3
+alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
 export MYVIMRC="$HOME/.config/vim/vimrc"
 export VIMINIT="source $MYVIMRC"
 
