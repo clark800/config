@@ -1,5 +1,4 @@
 set fish_greeting ""
-set PATH . $PATH
 set -x MYVIMRC "$HOME/.config/vim/vimrc"
 set -x VIMINIT "source $MYVIMRC"
 set -x NPM_CONFIG_USERCONFIG "$HOME/.config/npm/npmrc"
@@ -32,12 +31,16 @@ function tmux-dev
     if [ "$cols" -lt 160 ]
         tmux new-session \; split-window -b -h -l 80
     else if [ "$cols" -lt 240 ]
-        tmux new-session \; split-window -b -h -l (math "$cols/2")
+        tmux new-session \; split-window -b -h -l (math "floor($cols/2)")
     else
         tmux new-session \; \
-            split-window -b -h -l (math "2*$cols/3") \; \
-            split-window -b -h -l (math "$cols/3")
+            split-window -b -h -l (math "floor(2*$cols/3)") \; \
+            split-window -b -h -l (math "floor($cols/3)")
     end
+end
+
+function sloc
+    find . -name "*.[c|h]" | xargs grep . | wc -l
 end
 
 function vm
@@ -59,6 +62,10 @@ function vm
     set port (VBoxManage showvminfo "$name" --machinereadable | \
                  grep '^Forwarding(.*,22"' | cut -d, -f4)
     ssh -p $port -o ConnectionAttempts=60 $username@localhost
+end
+
+function upload
+    scp $argv[1] admin@dfcd.net:public/dfcd.net/public/mod/
 end
 
 # map Ctrl-D to "clear"

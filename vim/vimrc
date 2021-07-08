@@ -85,7 +85,7 @@ highlight ColorColumn ctermbg=236 guibg=#303030
 
 " highlight tabs
 autocmd BufNewFile,BufReadPost,FileReadPost * syntax match Tab "\t"
-highlight Tab ctermbg=238 guibg=#444444
+highlight Tab ctermbg=233 guibg=#080808
 
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
 highlight ExtraWhitespace ctermbg=red guibg=red
