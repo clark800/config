@@ -11,8 +11,9 @@ alias gdb="gdb -quiet"
 alias grep="grep --color --exclude=tags"
 alias todo="vim (git config --get todo.path)"
 alias gd="git diff"
-alias gdo="git diff origin/master"
+alias gdm="git diff master"
 alias gst="git status"
+alias gb="git for-each-ref --sort='-authordate:iso8601' --format=' %(authordate:relative)%09%(refname:short)' refs/heads"
 alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
 
 if [ (uname -s) = "Linux" ]
