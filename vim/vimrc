@@ -14,12 +14,15 @@ set wildmenu
 set path+=**
 set completeopt=menu
 
-command -nargs=1 D lexpr system("cdef " . <q-args>)
-command -nargs=1 Dh lexpr system("cdef " . <q-args> . " '*.h'")
+function FileExtension()
+    let ext = expand('%:e')
+    return (ext == "h" ? "c" : ext)
+endfunction
+
+command -nargs=1 D lexpr system("def " . <q-args> . " " . FileExtension())
+command -nargs=1 Dh lexpr system("def " . <q-args> . " h")
 nmap <F12> :<C-U>D <C-R><C-W><CR>
-imap <F12> <Esc>:D <C-R><C-W><CR>
 nmap <S-F12> :<C-U>Dh <C-R><C-W><CR>
-imap <S-F12> <Esc>:Dh <C-R><C-W><CR>
 
 " set color of autocomplete popup menu
 highlight Pmenu ctermbg=238
