@@ -14,7 +14,7 @@ set wildmenu
 set path+=**
 set completeopt=menu
 
-autocmd BufRead,BufNewFile *.tsv setlocal noexpandtab ts=1 sw=1 sts=0
+autocmd BufRead,BufNewFile *.tsv setlocal nowrap noexpandtab ts=1 sw=1 sts=0
 
 " http://vimdoc.sourceforge.net/htmldoc/options.html#'viminfo'
 set viminfo='20,<1000       " remember marks for previous 20 files;
