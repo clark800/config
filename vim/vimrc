@@ -14,6 +14,42 @@ set wildmenu
 set path+=**
 set completeopt=menu
 
+autocmd BufRead,BufNewFile *.tsv setlocal noexpandtab ts=1 sw=1 sts=0
+
+" http://vimdoc.sourceforge.net/htmldoc/options.html#'viminfo'
+set viminfo='20,<1000       " remember marks for previous 20 files;
+                            " save max of 1000 lines for each region
+
+syntax on                   " enable syntax highlighting
+filetype plugin indent on   " enable filetype plugins and indentation rules
+
+" map Ctrl-Arrow keys
+" map <ESC>[1;5A <C-Up>
+" map <ESC>[1;5B <C-Down>
+" map <ESC>[1;5C <C-Right>
+" map <ESC>[1;5D <C-Left>
+
+"==============================================================================
+" Highlighting
+"==============================================================================
+
+syntax match Tab /\t/
+highlight Tab ctermbg=236
+highlight ColorColumn ctermbg=236
+highlight Pmenu ctermbg=238
+
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+"==============================================================================
+" Add commands for function definition search utility (def)
+"==============================================================================
+
 function FileExtension()
     let ext = expand('%:e')
     return (ext == "h" ? "c" : ext)
@@ -24,15 +60,9 @@ command -nargs=1 Dh lexpr system("def " . <q-args> . " h")
 nmap <F12> :<C-U>D <C-R><C-W><CR>
 nmap <S-F12> :<C-U>Dh <C-R><C-W><CR>
 
-" set color of autocomplete popup menu
-highlight Pmenu ctermbg=238
-
-" http://vimdoc.sourceforge.net/htmldoc/options.html#'viminfo'
-set viminfo='20,<1000       " remember marks for previous 20 files;
-                            " save max of 1000 lines for each region
-
-syntax on                   " enable syntax highlighting
-filetype plugin indent on   " enable filetype plugins and indentation rules
+"==============================================================================
+" Block folding for todo files
+"==============================================================================
 
 function IndentedBlockFoldExpr(line_number)
     let current_indent = indent(a:line_number) / &shiftwidth
@@ -74,42 +104,3 @@ function SetIndentedBlockFolding()
 endfunction
 
 autocmd BufRead,BufNewFile *.todo call SetIndentedBlockFolding()
-
-" http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
-function! CleverTab()
-    if pumvisible()
-        return "\<C-N>"
-    endif
-        if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-        return "\<Tab>"
-    elseif exists('&omnifunc') && &omnifunc != ''
-        return "\<C-X>\<C-O>"
-    else
-        return "\<C-N>"
-    endif
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
-
-" highlight column 81
-highlight ColorColumn ctermbg=236 guibg=#303030
-
-" highlight tabs
-autocmd BufNewFile,BufReadPost,FileReadPost * syntax match Tab "\t"
-highlight Tab ctermbg=233 guibg=#080808
-
-" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-" update tags file after writes
-" autocmd BufWritePost *.c,*.h,*.zero silent! !ctags -R --quiet &
-
-" map Ctrl-Arrow keys
-" map <ESC>[1;5A <C-Up>
-" map <ESC>[1;5B <C-Down>
-" map <ESC>[1;5C <C-Right>
-" map <ESC>[1;5D <C-Left>
