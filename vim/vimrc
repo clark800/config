@@ -20,7 +20,6 @@ autocmd BufRead,BufNewFile *.tsv setlocal nowrap noexpandtab ts=1 sw=1 sts=0
 set viminfo='20,<1000       " remember marks for previous 20 files;
                             " save max of 1000 lines for each region
 
-syntax on                   " enable syntax highlighting
 filetype plugin indent on   " enable filetype plugins and indentation rules
 
 " map Ctrl-Arrow keys
@@ -32,6 +31,16 @@ filetype plugin indent on   " enable filetype plugins and indentation rules
 "==============================================================================
 " Highlighting
 "==============================================================================
+
+let g:is_posix = 1          " assume the shell is posix compliant
+syntax on
+
+" https://stsievert.com/blog/2016/01/06/vim-jekyll-mathjax/
+autocmd filetype markdown syntax region markdownMath start=/\$\$/ end=/\$\$/
+autocmd filetype markdown syntax match markdownInlineMath '\$[^$].\{-}\$'
+autocmd filetype markdown highlight link markdownMath Type
+autocmd filetype markdown highlight link markdownInlineMath Type
+autocmd filetype markdown highlight link markdownItalic Special
 
 syntax match Tab /\t/
 highlight Tab ctermbg=236
