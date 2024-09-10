@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# disallow binary files and large files unless BINARY or LARGE tag in commit msg
+
 commit_msg_file="$1"
 
 if ! grep -q "BINARY" "$commit_msg_file"; then
