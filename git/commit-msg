@@ -1,0 +1,11 @@
+#!/bin/sh
+
+commit_msg_file="$1"
+
+if ! grep -q "BINARY" "$commit_msg_file"; then
+    # numstat prints '-' for the number of added/deleted lines for binary files
+    if git diff --cached --numstat --diff-filter=ACM | grep -q '^-'; then
+        echo "ERROR: binary file(s) - add 'BINARY' to commit message" >&2
+        exit 1
+    fi
+fi
