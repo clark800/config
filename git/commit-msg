@@ -9,3 +9,15 @@ if ! grep -q "BINARY" "$commit_msg_file"; then
         exit 1
     fi
 fi
+
+if ! grep -q "LARGE" "$commit_msg_file"; then
+    git diff --cached --name-only --diff-filter=ACM |
+    while read -r file; do
+        name="$(git ls-files --format='%(objectname)' "$file")"
+        size="$(git cat-file -s "$name")"
+        if [ "$size" -gt 1048576 ]; then
+            echo "ERROR: large file(s) - add 'LARGE' to commit message" >&2
+            exit 1
+        fi
+    done
+fi
