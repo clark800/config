@@ -112,4 +112,4 @@ function SetIndentedBlockFolding()
     nnoremap <buffer> <silent> <tab> :<c-u>call ToggleFold()<cr>
 endfunction
 
-autocmd BufRead,BufNewFile *.todo call SetIndentedBlockFolding()
+autocmd BufRead,BufNewFile todo,*.todo call SetIndentedBlockFolding()
